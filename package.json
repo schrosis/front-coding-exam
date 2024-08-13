@@ -4,5 +4,14 @@
   "description": "",
   "author": "",
   "license": "ISC",
-  "scripts": {}
+  "type": "module",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.8"
+  }
 }
