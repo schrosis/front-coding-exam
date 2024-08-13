@@ -1,5 +1,5 @@
 {
-  "name": "infra",
+  "name": "@front-coding-exam/infra",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,14 +16,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@front-coding-exam/domain": "workspace:*",
     "axios": "^1.7.3",
-    "domain": "workspace:*",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
+    "@front-coding-exam/dev-tools": "workspace:*",
     "@types/jest": "^29.5.12",
-    "dev-tools": "workspace:*",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.4",
     "typescript": "^5.5.3"

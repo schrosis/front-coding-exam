@@ -1,6 +1,6 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
 	"extends": [
-		"node_modules/dev-tools/biome.json"
+		"node_modules/@front-coding-exam/dev-tools/biome.json"
 	]
 }

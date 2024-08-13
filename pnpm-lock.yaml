@@ -42,12 +42,12 @@ importers:
       '@biomejs/biome':
         specifier: ^1.8.3
         version: 1.8.3
+      '@front-coding-exam/dev-tools':
+        specifier: workspace:*
+        version: link:../dev-tools
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
-      dev-tools:
-        specifier: workspace:*
-        version: link:../dev-tools
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.2.0)
@@ -60,12 +60,12 @@ importers:
 
   packages/infra:
     dependencies:
+      '@front-coding-exam/domain':
+        specifier: workspace:*
+        version: link:../domain
       axios:
         specifier: ^1.7.3
         version: 1.7.3
-      domain:
-        specifier: workspace:*
-        version: link:../domain
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -73,12 +73,12 @@ importers:
       '@biomejs/biome':
         specifier: ^1.8.3
         version: 1.8.3
+      '@front-coding-exam/dev-tools':
+        specifier: workspace:*
+        version: link:../dev-tools
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
-      dev-tools:
-        specifier: workspace:*
-        version: link:../dev-tools
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.2.0)
