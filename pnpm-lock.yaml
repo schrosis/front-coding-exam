@@ -27,6 +27,12 @@ importers:
         specifier: ^1.8.3
         version: 1.8.3
 
+  packages/domain:
+    dependencies:
+      dev-tools:
+        specifier: ^0.1.6
+        version: 0.1.6
+
 packages:
 
   '@babel/code-frame@7.24.7':
@@ -303,6 +309,9 @@ packages:
     peerDependenciesMeta:
       supports-color:
         optional: true
+
+  dev-tools@0.1.6:
+    resolution: {integrity: sha512-pddj9W+dHEytobyyFs4N8IE29mPFpZD+T16xjF+HhEfQEJ9gRjSgW7sNUwJR6S+MeSdgTEgwGl0snyCHTpXv9g==}
 
   dot-prop@5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
@@ -1015,6 +1024,8 @@ snapshots:
   debug@4.3.6:
     dependencies:
       ms: 2.1.2
+
+  dev-tools@0.1.6: {}
 
   dot-prop@5.3.0:
     dependencies:
