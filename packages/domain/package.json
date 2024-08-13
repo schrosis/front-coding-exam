@@ -2,7 +2,7 @@
   "name": "domain",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "check": "biome check ./src",
     "check:fix": "biome check --write ./src",
