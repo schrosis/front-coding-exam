@@ -1,5 +1,5 @@
 export default {
   "*.{js,ts,jsx,tsx}": () => {
-    return `pnpm -r check --staged`;
+    return `pnpm -r check:fix --staged --no-errors-on-unmatched`;
   },
 };
