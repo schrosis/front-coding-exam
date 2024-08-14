@@ -1,36 +1,44 @@
 import { Prefecture, PrefectureId } from "./Prefecture";
+import { DomainError } from "./error";
 
 describe("PrefectureId", () => {
-  describe("of メソッド", () => {
-    test("数値で PrefectureId インスタンスを作成できる", () => {
-      const id = PrefectureId.of(1);
-      expect(id).toBeInstanceOf(PrefectureId);
-      expect(id.value).toBe(1);
-    });
+  test("有効な値で作成できる", () => {
+    const result = PrefectureId.of(1);
+    expect(result.isOk()).toBe(true);
+    expect(result._unsafeUnwrap().value).toBe(1);
   });
 
-  test('class プロパティが "PrefectureId" である', () => {
-    const id = PrefectureId.of(1);
-    expect(id.class).toBe("PrefectureId");
+  test.each([
+    { case: "0以下の値", input: 0 },
+    { case: "小数", input: 1.5 },
+  ])("$caseでエラーになる", ({ input }) => {
+    const result = PrefectureId.of(input);
+
+    expect(result.isErr()).toBe(true);
+    const error = result._unsafeUnwrapErr();
+    expect(error).toBeInstanceOf(DomainError);
+    expect(error.message).toBe("都道府県IDは1以上の整数である必要があります。");
   });
 });
 
 describe("Prefecture", () => {
-  describe("reconstruct メソッド", () => {
-    test("PrefectureId と名前で Prefecture インスタンスを作成できる", () => {
-      const id = PrefectureId.of(1);
-      const name = "東京都";
-      const prefecture = Prefecture.reconstruct(id, name);
-      expect(prefecture).toBeInstanceOf(Prefecture);
-      expect(prefecture.prefectureId).toBe(id);
-      expect(prefecture.name).toBe(name);
-    });
+  test("有効な値で作成できる", () => {
+    const prefectureId = PrefectureId.of(1)._unsafeUnwrap();
+    const result = Prefecture.reconstruct(prefectureId, "東京都");
+    expect(result.isOk()).toBe(true);
+    expect(result._unsafeUnwrap().prefectureId).toBe(prefectureId);
+    expect(result._unsafeUnwrap().name).toBe("東京都");
   });
 
-  test('class プロパティが "Prefecture" である', () => {
-    const id = PrefectureId.of(1);
-    const name = "東京都";
-    const prefecture = Prefecture.reconstruct(id, name);
-    expect(prefecture.class).toBe("Prefecture");
+  test.each([
+    { case: "空の名前", input: "" },
+    { case: "空白のみの名前", input: "   " },
+  ])("$caseでエラーになる", ({ input }) => {
+    const prefectureId = PrefectureId.of(1)._unsafeUnwrap();
+    const result = Prefecture.reconstruct(prefectureId, input);
+    expect(result.isErr()).toBe(true);
+    const error = result._unsafeUnwrapErr();
+    expect(error).toBeInstanceOf(DomainError);
+    expect(error.message).toBe("都道府県名は空であってはいけません。");
   });
 });

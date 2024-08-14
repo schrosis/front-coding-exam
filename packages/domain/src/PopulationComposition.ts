@@ -1,6 +1,6 @@
-import type { Result } from "neverthrow";
+import { type Result, err, ok } from "neverthrow";
 import type { PrefectureId } from "./Prefecture";
-import type { DomainError } from "./error";
+import { DomainError } from "./error";
 
 export interface PopulationCompositionRepository {
   find(
@@ -19,9 +19,18 @@ export class PopulationComposition {
 
   static reconstruct(
     prefectureId: PrefectureId,
-    compositions: Map<Year, Composition>,
-  ): PopulationComposition {
-    return new PopulationComposition(prefectureId, compositions);
+    compositions: Composition[],
+  ): Result<PopulationComposition, DomainError> {
+    const compositionMap = new Map<Year, Composition>();
+
+    for (const composition of compositions) {
+      if (typeof compositionMap.get(composition.year) !== "undefined") {
+        return err(new DomainError("重複する年があります。"));
+      }
+      compositionMap.set(composition.year, composition);
+    }
+
+    return ok(new PopulationComposition(prefectureId, compositionMap));
   }
 
   get class(): string {
@@ -47,13 +56,20 @@ export class Composition {
     youngPopulation: number,
     workingAgePopulation: number,
     olderPopulation: number,
-  ): Composition {
-    return new Composition(
-      year,
-      totalPopulation,
-      youngPopulation,
-      workingAgePopulation,
-      olderPopulation,
+  ): Result<Composition, DomainError> {
+    const sum = youngPopulation + workingAgePopulation + olderPopulation;
+    if (sum !== totalPopulation) {
+      return err(new DomainError("各人口の合計が総人口と一致しません。"));
+    }
+
+    return ok(
+      new Composition(
+        year,
+        totalPopulation,
+        youngPopulation,
+        workingAgePopulation,
+        olderPopulation,
+      ),
     );
   }
 

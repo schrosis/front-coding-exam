@@ -1,78 +1,64 @@
 import { Composition, PopulationComposition } from "./PopulationComposition";
 import { PrefectureId } from "./Prefecture";
+import { DomainError } from "./error";
 
-describe("PopulationComposition", () => {
-  describe("reconstruct メソッド", () => {
-    test("PrefectureId と compositions で PopulationComposition インスタンスを作成できる", () => {
-      const prefectureId = PrefectureId.of(1);
-      const compositions = new Map<number, Composition>();
-      compositions.set(
-        2020,
-        Composition.reconstruct(2020, 1000000, 200000, 600000, 200000),
-      );
-      compositions.set(
-        2021,
-        Composition.reconstruct(2021, 1010000, 190000, 610000, 210000),
-      );
+describe("Composition", () => {
+  test("有効な値で作成できる", () => {
+    const result = Composition.reconstruct(2020, 1000, 200, 500, 300);
 
-      const populationComposition = PopulationComposition.reconstruct(
-        prefectureId,
-        compositions,
-      );
-
-      expect(populationComposition).toBeInstanceOf(PopulationComposition);
-      expect(populationComposition.prefectureId).toBe(prefectureId);
-      expect(populationComposition.compositions).toBe(compositions);
-    });
+    expect(result.isOk()).toBe(true);
+    const composition = result._unsafeUnwrap();
+    expect(composition.year).toBe(2020);
+    expect(composition.totalPopulation).toBe(1000);
+    expect(composition.youngPopulation).toBe(200);
+    expect(composition.workingAgePopulation).toBe(500);
+    expect(composition.olderPopulation).toBe(300);
   });
 
-  test('class プロパティが "PopulationComposition" である', () => {
-    const prefectureId = PrefectureId.of(1);
-    const compositions = new Map<number, Composition>();
-    const populationComposition = PopulationComposition.reconstruct(
+  test("各人口の合計が総人口と一致しない場合、エラーになる", () => {
+    const result = Composition.reconstruct(2020, 1000, 200, 500, 301);
+
+    expect(result.isErr()).toBe(true);
+    const error = result._unsafeUnwrapErr();
+    expect(error).toBeInstanceOf(DomainError);
+    expect(error.message).toBe("各人口の合計が総人口と一致しません。");
+  });
+});
+
+describe("PopulationComposition", () => {
+  test("有効な値で作成できる", () => {
+    const prefectureId = PrefectureId.of(1)._unsafeUnwrap();
+    const compositions = [
+      Composition.reconstruct(2020, 1000, 200, 500, 300)._unsafeUnwrap(),
+      Composition.reconstruct(2021, 1030, 210, 510, 310)._unsafeUnwrap(),
+    ];
+
+    const result = PopulationComposition.reconstruct(
       prefectureId,
       compositions,
     );
 
-    expect(populationComposition.class).toBe("PopulationComposition");
-  });
-});
-
-describe("Composition", () => {
-  describe("reconstruct メソッド", () => {
-    test("年と各人口データで Composition インスタンスを作成できる", () => {
-      const year = 2020;
-      const totalPopulation = 1000000;
-      const youngPopulation = 200000;
-      const workingAgePopulation = 600000;
-      const olderPopulation = 200000;
-
-      const composition = Composition.reconstruct(
-        year,
-        totalPopulation,
-        youngPopulation,
-        workingAgePopulation,
-        olderPopulation,
-      );
-
-      expect(composition).toBeInstanceOf(Composition);
-      expect(composition.year).toBe(year);
-      expect(composition.totalPopulation).toBe(totalPopulation);
-      expect(composition.youngPopulation).toBe(youngPopulation);
-      expect(composition.workingAgePopulation).toBe(workingAgePopulation);
-      expect(composition.olderPopulation).toBe(olderPopulation);
-    });
+    expect(result.isOk()).toBe(true);
+    const populationComposition = result._unsafeUnwrap();
+    expect(populationComposition.prefectureId).toBe(prefectureId);
+    expect(populationComposition.compositions.size).toBe(2);
   });
 
-  test('class プロパティが "Composition" である', () => {
-    const composition = Composition.reconstruct(
-      2020,
-      1000000,
-      200000,
-      600000,
-      200000,
+  test("重複する年がある場合、エラーになる", () => {
+    const prefectureId = PrefectureId.of(1)._unsafeUnwrap();
+    const compositions = [
+      Composition.reconstruct(2020, 1000, 200, 500, 300)._unsafeUnwrap(),
+      Composition.reconstruct(2020, 1030, 210, 510, 310)._unsafeUnwrap(),
+    ];
+
+    const result = PopulationComposition.reconstruct(
+      prefectureId,
+      compositions,
     );
 
-    expect(composition.class).toBe("Composition");
+    expect(result.isErr()).toBe(true);
+    const error = result._unsafeUnwrapErr();
+    expect(error).toBeInstanceOf(DomainError);
+    expect(error.message).toBe("重複する年があります。");
   });
 });
