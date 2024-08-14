@@ -53,7 +53,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm ${{ matrix.package }} install
+        run: pnpm install
 
       - name: Formatter and Linter
         run: pnpm ${{ matrix.package }} check
