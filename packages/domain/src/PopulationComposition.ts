@@ -1,7 +1,11 @@
+import type { Result } from "neverthrow";
 import type { PrefectureId } from "./Prefecture";
+import type { DomainError } from "./error";
 
 export interface PopulationCompositionRepository {
-  find(prefectureId: PrefectureId): Promise<PopulationComposition | null>;
+  find(
+    prefectureId: PrefectureId,
+  ): Promise<Result<PopulationComposition, DomainError>>;
 }
 
 const populationCompositionSymbol = Symbol();
