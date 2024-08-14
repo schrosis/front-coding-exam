@@ -4,8 +4,9 @@ export interface PopulationCompositionRepository {
   find(prefectureId: PrefectureId): Promise<PopulationComposition | null>;
 }
 
+const populationCompositionSymbol = Symbol();
 export class PopulationComposition {
-  readonly class = Symbol("PopulationComposition");
+  private [populationCompositionSymbol] = "PopulationComposition";
 
   private constructor(
     readonly prefectureId: PrefectureId,
@@ -18,10 +19,15 @@ export class PopulationComposition {
   ): PopulationComposition {
     return new PopulationComposition(prefectureId, compositions);
   }
+
+  get class(): string {
+    return this[populationCompositionSymbol];
+  }
 }
 
+const compositionSymbol = Symbol();
 export class Composition {
-  readonly class = Symbol("Composition");
+  private [compositionSymbol] = "Composition";
 
   private constructor(
     readonly year: Year,
@@ -45,6 +51,10 @@ export class Composition {
       workingAgePopulation,
       olderPopulation,
     );
+  }
+
+  get class(): string {
+    return this[compositionSymbol];
   }
 }
 

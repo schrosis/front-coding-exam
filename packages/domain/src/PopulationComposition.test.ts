@@ -26,7 +26,7 @@ describe("PopulationComposition", () => {
     });
   });
 
-  test('class プロパティが Symbol("PopulationComposition") である', () => {
+  test('class プロパティが "PopulationComposition" である', () => {
     const prefectureId = PrefectureId.of(1);
     const compositions = new Map<number, Composition>();
     const populationComposition = PopulationComposition.reconstruct(
@@ -34,9 +34,7 @@ describe("PopulationComposition", () => {
       compositions,
     );
 
-    expect(populationComposition.class.toString()).toBe(
-      "Symbol(PopulationComposition)",
-    );
+    expect(populationComposition.class).toBe("PopulationComposition");
   });
 });
 
@@ -66,7 +64,7 @@ describe("Composition", () => {
     });
   });
 
-  test('class プロパティが Symbol("Composition") である', () => {
+  test('class プロパティが "Composition" である', () => {
     const composition = Composition.reconstruct(
       2020,
       1000000,
@@ -75,6 +73,6 @@ describe("Composition", () => {
       200000,
     );
 
-    expect(composition.class.toString()).toBe("Symbol(Composition)");
+    expect(composition.class).toBe("Composition");
   });
 });

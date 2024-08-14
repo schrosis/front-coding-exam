@@ -9,9 +9,9 @@ describe("PrefectureId", () => {
     });
   });
 
-  test('class プロパティが Symbol("PrefectureId") である', () => {
+  test('class プロパティが "PrefectureId" である', () => {
     const id = PrefectureId.of(1);
-    expect(id.class.toString()).toBe("Symbol(PrefectureId)");
+    expect(id.class).toBe("PrefectureId");
   });
 });
 
@@ -27,10 +27,10 @@ describe("Prefecture", () => {
     });
   });
 
-  test('class プロパティが Symbol("Prefecture") である', () => {
+  test('class プロパティが "Prefecture" である', () => {
     const id = PrefectureId.of(1);
     const name = "東京都";
     const prefecture = Prefecture.reconstruct(id, name);
-    expect(prefecture.class.toString()).toBe("Symbol(Prefecture)");
+    expect(prefecture.class).toBe("Prefecture");
   });
 });
