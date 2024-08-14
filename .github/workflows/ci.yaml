@@ -4,17 +4,47 @@ on:
   pull_request:
 
 jobs:
+  generate_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.short_package_names.outputs.packages }}
+      empty: ${{ steps.changed_packages.outputs.empty }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find changed packages
+        id: changed_packages
+        uses: alexshukel/get-changed-workspaces-action@v2.0.0
+        with:
+          workspaces: packages/*
+
+      - name: Extract short package names
+        id: short_package_names
+        run: |
+          packages=$(echo '${{ steps.changed_packages.outputs.packages }}' | jq -c 'map(.name | sub("^@front-coding-exam/"; ""))' )
+          echo "packages=${packages}" >> "$GITHUB_OUTPUT"
+
   ci:
     name: CI
+    needs: [generate_matrix]
+    if: ${{ !fromJson(needs.generate_matrix.outputs.empty) }}
     runs-on: ubuntu-latest
-
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: write
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.generate_matrix.outputs.packages) }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.7.0
+          version: "9.7.0"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -23,13 +53,17 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm ${{ matrix.package }} install
 
       - name: Formatter and Linter
-        run: pnpm -r check
+        run: pnpm ${{ matrix.package }} check
 
       - name: Type check
-        run: pnpm -r typecheck
+        run: pnpm ${{ matrix.package }} typecheck
 
-      - name: Test
-        run: pnpm -r test
+      - name: Test and Coverage
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          working-directory: packages/${{ matrix.package }}
+          skip-step: install
+          package-manager: pnpm
