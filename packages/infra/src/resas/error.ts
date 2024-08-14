@@ -27,11 +27,13 @@ export const errorResponse = z.union([
 ]);
 export type ErrorResponse = z.infer<typeof errorResponse>;
 
-export class ResasError {
+export class ResasError extends Error {
   private constructor(
     readonly type: "400" | "403" | "404" | "unexpected",
     readonly errorResponse?: ErrorResponse,
-  ) {}
+  ) {
+    super("RESAS API でエラーが発生しました。");
+  }
 
   static of(errorResponse: ErrorResponse): ResasError {
     if (errorResponse === "400") {
