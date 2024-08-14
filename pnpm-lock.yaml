@@ -8,12 +8,18 @@ importers:
 
   .:
     devDependencies:
+      '@biomejs/biome':
+        specifier: ^1.8.3
+        version: 1.8.3
       '@commitlint/cli':
         specifier: ^19.4.0
         version: 19.4.0(@types/node@22.2.0)(typescript@5.5.4)
       '@commitlint/config-conventional':
         specifier: ^19.2.2
         version: 19.2.2
+      '@front-coding-exam/dev-tools':
+        specifier: workspace:*
+        version: link:packages/dev-tools
       husky:
         specifier: ^8.0.0
         version: 8.0.3
