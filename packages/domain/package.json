@@ -10,6 +10,7 @@
     "format:fix": "biome format --write ./src",
     "lint": "biome lint ./src",
     "lint:fix": "biome lint --write ./src",
+    "typecheck": "tsc",
     "test": "jest ./src"
   },
   "keywords": [],
