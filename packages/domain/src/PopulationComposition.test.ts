@@ -13,6 +13,7 @@ describe("Composition", () => {
     expect(composition.youngPopulation).toBe(200);
     expect(composition.workingAgePopulation).toBe(500);
     expect(composition.olderPopulation).toBe(300);
+    expect(composition.class).toBe("Composition");
   });
 
   test("各人口の合計が総人口と一致しない場合、エラーになる", () => {
@@ -42,6 +43,7 @@ describe("PopulationComposition", () => {
     const populationComposition = result._unsafeUnwrap();
     expect(populationComposition.prefectureId).toBe(prefectureId);
     expect(populationComposition.compositions.size).toBe(2);
+    expect(populationComposition.class).toBe("PopulationComposition");
   });
 
   test("重複する年がある場合、エラーになる", () => {

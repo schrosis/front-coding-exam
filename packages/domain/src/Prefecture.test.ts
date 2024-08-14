@@ -4,8 +4,11 @@ import { DomainError } from "./error";
 describe("PrefectureId", () => {
   test("有効な値で作成できる", () => {
     const result = PrefectureId.of(1);
+
     expect(result.isOk()).toBe(true);
-    expect(result._unsafeUnwrap().value).toBe(1);
+    const prefectureId = result._unsafeUnwrap();
+    expect(prefectureId.value).toBe(1);
+    expect(prefectureId.class).toBe("PrefectureId");
   });
 
   test.each([
@@ -24,10 +27,14 @@ describe("PrefectureId", () => {
 describe("Prefecture", () => {
   test("有効な値で作成できる", () => {
     const prefectureId = PrefectureId.of(1)._unsafeUnwrap();
+
     const result = Prefecture.reconstruct(prefectureId, "東京都");
+
     expect(result.isOk()).toBe(true);
-    expect(result._unsafeUnwrap().prefectureId).toBe(prefectureId);
-    expect(result._unsafeUnwrap().name).toBe("東京都");
+    const prefecture = result._unsafeUnwrap();
+    expect(prefecture.prefectureId).toBe(prefectureId);
+    expect(prefecture.name).toBe("東京都");
+    expect(prefecture.class).toBe("Prefecture");
   });
 
   test.each([
@@ -35,7 +42,9 @@ describe("Prefecture", () => {
     { case: "空白のみの名前", input: "   " },
   ])("$caseでエラーになる", ({ input }) => {
     const prefectureId = PrefectureId.of(1)._unsafeUnwrap();
+
     const result = Prefecture.reconstruct(prefectureId, input);
+
     expect(result.isErr()).toBe(true);
     const error = result._unsafeUnwrapErr();
     expect(error).toBeInstanceOf(DomainError);
