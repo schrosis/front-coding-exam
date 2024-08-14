@@ -19,6 +19,7 @@
   "dependencies": {
     "@front-coding-exam/domain": "workspace:*",
     "axios": "^1.7.4",
+    "neverthrow": "^7.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "@front-coding-exam/dev-tools": "workspace:*",
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
+    "msw": "^2.3.5",
     "ts-jest": "^29.2.4",
     "typescript": "^5.5.3"
   }
