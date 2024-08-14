@@ -4,7 +4,7 @@ import {
   PrefectureId,
   type PrefectureRepository,
 } from "@front-coding-exam/domain";
-import { Result, err } from "neverthrow";
+import { Result, err, safeTry } from "neverthrow";
 import type { ResasApiClient } from "../resas";
 
 export class PrefectureResasApiRepository implements PrefectureRepository {
@@ -18,12 +18,14 @@ export class PrefectureResasApiRepository implements PrefectureRepository {
     }
 
     return Result.combine(
-      res.value.result.map((prefecture) => {
-        return Result.combine([PrefectureId.of(prefecture.prefCode)]).andThen(
-          ([prefectureId]) =>
-            Prefecture.reconstruct(prefectureId, prefecture.prefName),
-        );
-      }),
+      res.value.result.map((prefecture) =>
+        safeTry(function* () {
+          return Prefecture.reconstruct(
+            yield* PrefectureId.of(prefecture.prefCode).safeUnwrap(),
+            prefecture.prefName,
+          );
+        }),
+      ),
     );
   }
 }
