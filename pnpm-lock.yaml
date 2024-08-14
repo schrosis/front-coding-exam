@@ -26,7 +26,6 @@ importers:
       '@biomejs/biome':
         specifier: ^1.8.3
         version: 1.8.3
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
