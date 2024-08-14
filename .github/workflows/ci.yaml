@@ -7,7 +7,7 @@ jobs:
   generate_matrix:
     runs-on: ubuntu-latest
     outputs:
-      packages: ${{ steps.changed_packages.outputs.packages }}
+      packages: ${{ steps.short_package_names.outputs.packages }}
       empty: ${{ steps.changed_packages.outputs.empty }}
     steps:
       - name: Checkout
@@ -19,11 +19,21 @@ jobs:
         with:
           workspaces: packages/*
 
+      - name: Extract short package names
+        id: short_package_names
+        run: |
+          packages=$(echo '${{ steps.changed_packages.outputs.packages }}' | jq -c 'map(.name | sub("^@front-coding-exam/"; ""))' )
+          echo "packages=${packages}" >> "$GITHUB_OUTPUT"
+
   ci:
     name: CI
     needs: [generate_matrix]
     if: ${{ !fromJson(needs.generate_matrix.outputs.empty) }}
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: write
     strategy:
       matrix:
         package: ${{ fromJson(needs.generate_matrix.outputs.packages) }}
@@ -54,6 +64,6 @@ jobs:
       - name: Test and Coverage
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
+          working-directory: packages/${{ matrix.package }}
           skip-step: install
           package-manager: pnpm
-          test-script: pnpm ${{ matrix.package }} test
