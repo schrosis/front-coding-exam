@@ -49,7 +49,7 @@ export class ResasError {
       errorResponse === "404" ||
       (typeof errorResponse === "object" && errorResponse.statusCode === "404")
     ) {
-      return new ResasError("403", errorResponse);
+      return new ResasError("404", errorResponse);
     }
 
     const never: never = errorResponse;
