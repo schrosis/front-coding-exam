@@ -1,5 +1,8 @@
+import type { Result } from "neverthrow";
+import type { DomainError } from "./error";
+
 export interface PrefectureRepository {
-  all(): Promise<Prefecture[]>;
+  all(): Promise<Result<Prefecture[], DomainError>>;
 }
 
 const prefectureSymbol = Symbol();
