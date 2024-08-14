@@ -6,7 +6,10 @@
   "license": "ISC",
   "type": "module",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev-tool": "pnpm --filter dev-tool",
+    "domain": "pnpm --filter domain",
+    "infra": "pnpm --filter infra"
   },
   "devDependencies": {
     "@front-coding-exam/dev-tools": "workspace:*",
