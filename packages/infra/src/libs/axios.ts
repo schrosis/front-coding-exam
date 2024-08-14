@@ -1,8 +1,8 @@
 import Axios, { type AxiosInstance } from "axios";
 
-export const createClient = (apiKey: string): AxiosInstance =>
+export const createClient = (baseURL: string, apiKey: string): AxiosInstance =>
   Axios.create({
-    baseURL: "https://opendata.resas-portal.go.jp",
+    baseURL: baseURL,
     headers: {
       "X-API-KEY": apiKey,
     },
