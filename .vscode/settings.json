@@ -22,5 +22,6 @@
     "quickfix.biome": "explicit",
     "source.organizeImports.biome": "explicit"
   },
-  "jest.jestCommandLine": "pnpm -r test --"
+  "jest.jestCommandLine": "pnpm test --",
+  "jest.runMode": "on-demand"
 }
