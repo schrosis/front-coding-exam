@@ -57,11 +57,6 @@ export class Composition {
     workingAgePopulation: number,
     olderPopulation: number,
   ): Result<Composition, DomainError> {
-    const sum = youngPopulation + workingAgePopulation + olderPopulation;
-    if (sum !== totalPopulation) {
-      return err(new DomainError("各人口の合計が総人口と一致しません。"));
-    }
-
     return ok(
       new Composition(
         year,

@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky install",
-    "dev-tool": "pnpm --filter dev-tool",
+    "dev-tools": "pnpm --filter dev-tools",
     "domain": "pnpm --filter domain",
     "infra": "pnpm --filter infra",
     "test": "jest ./packages"

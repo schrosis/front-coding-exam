@@ -15,15 +15,6 @@ describe("Composition", () => {
     expect(composition.olderPopulation).toBe(300);
     expect(composition.class).toBe("Composition");
   });
-
-  test("各人口の合計が総人口と一致しない場合、エラーになる", () => {
-    const result = Composition.reconstruct(2020, 1000, 200, 500, 301);
-
-    expect(result.isErr()).toBe(true);
-    const error = result._unsafeUnwrapErr();
-    expect(error).toBeInstanceOf(DomainError);
-    expect(error.message).toBe("各人口の合計が総人口と一致しません。");
-  });
 });
 
 describe("PopulationComposition", () => {

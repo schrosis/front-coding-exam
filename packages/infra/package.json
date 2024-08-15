@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "check": "biome check ./src",
-    "check:fix": "biome check --write ./src",
-    "format": "biome format ./src",
-    "format:fix": "biome format --write ./src",
-    "lint": "biome lint ./src",
-    "lint:fix": "biome lint --write ./src",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
     "typecheck": "tsc",
     "test": "jest ./src"
   },
