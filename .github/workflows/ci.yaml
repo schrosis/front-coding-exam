@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  changed_packages:
+  generate_matrix:
     runs-on: ubuntu-latest
     outputs:
       packages: ${{ steps.short_package_names.outputs.packages }}
@@ -27,7 +27,8 @@ jobs:
 
   ci:
     name: CI
-    needs: [changed_packages]
+    needs: [generate_matrix]
+    if: ${{ !fromJson(needs.generate_matrix.outputs.empty) }}
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -35,8 +36,7 @@ jobs:
       contents: write
     strategy:
       matrix:
-        package: [dev-tools, domain, infra]
-    if: ${{ contains(fromJson(needs.generate_matrix.outputs.packages), matrix.package) }}
+        package: ${{ fromJson(needs.generate_matrix.outputs.packages) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
