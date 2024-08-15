@@ -35,6 +35,7 @@ jobs:
       pull-requests: write
       contents: write
     strategy:
+      fail-fast: false
       matrix:
         package: ${{ fromJson(needs.generate_matrix.outputs.packages) }}
     steps:
