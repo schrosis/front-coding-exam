@@ -13,7 +13,7 @@
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "typecheck": "tsc",
-    "test": "exit 0"
+    "test": "jest ./src"
   },
   "peerDependencies": {
     "@biomejs/biome": "^1.8.3",
