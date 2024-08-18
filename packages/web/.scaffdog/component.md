@@ -56,4 +56,15 @@ export default meta;
 type Story = StoryObj<typeof {{ PascalComponentName }}>;
 
 export const Default: Story = {};
+
+```
+
+# {{ PascalComponentName }}/{{ PascalComponentName }}.test.tsx
+
+```typescript
+import { render } from "@testing-library/react";
+import { {{ PascalComponentName }} } from "./{{ PascalComponentName }}";
+
+describe("{{ PascalComponentName }}", () => {});
+
 ```
