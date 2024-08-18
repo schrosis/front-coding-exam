@@ -1,0 +1,31 @@
+{
+  "name": "@front-coding-exam/app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "typecheck": "tsc",
+    "test": "jest ./src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@front-coding-exam/dev-tools": "workspace:*",
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@front-coding-exam/domain": "workspace:*",
+    "neverthrow": "^7.0.0"
+  }
+}

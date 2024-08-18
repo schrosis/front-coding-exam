@@ -39,6 +39,34 @@ importers:
         specifier: ^5.5.3
         version: 5.5.4
 
+  packages/app:
+    dependencies:
+      '@front-coding-exam/domain':
+        specifier: workspace:*
+        version: link:../domain
+      neverthrow:
+        specifier: ^7.0.0
+        version: 7.0.0
+    devDependencies:
+      '@biomejs/biome':
+        specifier: ^1.8.3
+        version: 1.8.3
+      '@front-coding-exam/dev-tools':
+        specifier: workspace:*
+        version: link:../dev-tools
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.2.0)
+      ts-jest:
+        specifier: ^29.2.4
+        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@22.2.0))(typescript@5.5.4)
+      typescript:
+        specifier: ^5.5.3
+        version: 5.5.4
+
   packages/dev-tools:
     dependencies:
       '@biomejs/biome':
