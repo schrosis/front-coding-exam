@@ -1,3 +1,7 @@
 {
-  "recommendations": ["biomejs.biome", "orta.vscode-jest"]
+  "recommendations": [
+    "biomejs.biome",
+    "orta.vscode-jest",
+    "hediet.vscode-drawio"
+  ]
 }
