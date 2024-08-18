@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [dev-tools, domain, infra, app]
+        package: [dev-tools, domain, infra, app, web]
     steps:
       - name: Checkout
         run: echo 'dummy job was success'
