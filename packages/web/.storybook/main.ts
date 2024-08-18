@@ -1,4 +1,6 @@
 import type { StorybookConfig } from "@storybook/nextjs";
+import { VanillaExtractPlugin } from "@vanilla-extract/webpack-plugin";
+import merge from "webpack-merge";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -8,5 +10,10 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ["../public"],
+  webpackFinal: (config) => {
+    return merge(config, {
+      plugins: [new VanillaExtractPlugin()],
+    });
+  },
 };
 export default config;
