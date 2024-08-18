@@ -10,6 +10,7 @@
     "dev-tools": "pnpm --filter dev-tools",
     "domain": "pnpm --filter domain",
     "infra": "pnpm --filter infra",
+    "app": "pnpm --filter app",
     "test": "jest ./packages"
   },
   "devDependencies": {
