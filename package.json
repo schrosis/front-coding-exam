@@ -11,6 +11,7 @@
     "domain": "pnpm --filter domain",
     "infra": "pnpm --filter infra",
     "app": "pnpm --filter app",
+    "web": "pnpm --filter web",
     "test": "jest ./packages"
   },
   "devDependencies": {
